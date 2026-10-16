@@ -1,0 +1,109 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #f3f4f8;
+  color: #222;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 1.6rem;
+}
+
+.subtitle {
+  margin: 0 0 24px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.field span {
+  font-size: 0.95rem;
+}
+
+.field input {
+  width: 110px;
+  padding: 8px 10px;
+  border: 1px solid #ccd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #6c4de6;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #5a3ccf;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fdecec;
+  color: #b3261e;
+  font-size: 0.9rem;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 10px;
+  background: #f0ecfd;
+  text-align: center;
+}
+
+.result-label {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.result-value {
+  margin: 2px 0 12px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
