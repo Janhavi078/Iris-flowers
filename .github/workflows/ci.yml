@@ -72,12 +72,53 @@ jobs:
 
       - name: Install dependencies
         working-directory: frontend
-        run: npm ci
+        run: |
+          npm ci
 
       - name: Build frontend
         working-directory: frontend
-        run: npm run build
+        run: |
+          npm run build
 
       - name: Build frontend Docker image
         run: |
           docker build -t iris-frontend ./frontend
+
+
+  deploy:
+    name: Deploy to EC2
+    needs: [backend, frontend]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+          IMAGE: ghcr.io/janhavi078/iris-backend:${{ github.sha }}
+
+        run: |
+          mkdir -p ~/.ssh
+
+          printf '%s\n' "$EC2_SSH_KEY" > ~/.ssh/ec2_key
+          chmod 600 ~/.ssh/ec2_key
+
+          ssh-keyscan -H "$EC2_HOST" >> ~/.ssh/known_hosts
+
+          ssh -i ~/.ssh/ec2_key "$EC2_USERNAME@$EC2_HOST" << EOF
+            docker pull $IMAGE
+
+            docker stop iris-backend || true
+            docker rm iris-backend || true
+
+            docker run -d \
+              --name iris-backend \
+              -p 8000:8000 \
+              $IMAGE
+
+            sleep 5
+
+            curl --fail http://localhost:8000/health
+          EOF
