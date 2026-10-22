@@ -48,7 +48,7 @@ jobs:
 
       - name: Build backend Docker image
         run: |
-          docker build -t ghcr.io/janhavi078/iris-backend:${{ github.sha }}
+          docker build -t ghcr.io/janhavi078/iris-backend:${{ github.sha }} ./backend
 
       - name: Push backend Docker image
         run: |
